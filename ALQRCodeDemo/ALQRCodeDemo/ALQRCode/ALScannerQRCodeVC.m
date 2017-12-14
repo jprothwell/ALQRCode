@@ -46,7 +46,7 @@
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
-    [self _playSoundEffect:@"ALQRCode.bundle/sound.mp3"];
+    [self _playSoundEffect:@"sound.mp3"];
     [self.session stopRunning];
     NSString *result = nil;
     if (metadataObjects.count > 0) {
