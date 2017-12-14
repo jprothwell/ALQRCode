@@ -78,13 +78,20 @@
 }
 
 - (void)_playSoundEffect:(NSString *)name {
-    NSString *audioFile = [[NSBundle mainBundle] pathForResource:name ofType:nil];
-    if (audioFile) {
-        NSURL *fileUrl = [NSURL fileURLWithPath:audioFile];
-        SystemSoundID soundID = 0;
-        AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &soundID);
-        AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, _soundCompleteCallback, NULL);
-        AudioServicesPlaySystemSound(soundID);
+    NSBundle* classBundle = [NSBundle bundleForClass:[ALScannerQRCodeVC class]];
+    if (classBundle) {
+        NSString* resPath = [classBundle pathForResource:@"ALQRCode" ofType:@"bundle"];
+        if (resPath) {
+            NSBundle* resBundle = [NSBundle bundleWithPath:resPath];
+            NSString *audioFile = [resBundle pathForResource:name ofType:nil];
+            if (audioFile) {
+                NSURL *fileUrl = [NSURL fileURLWithPath:audioFile];
+                SystemSoundID soundID = 0;
+                AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &soundID);
+                AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, _soundCompleteCallback, NULL);
+                AudioServicesPlaySystemSound(soundID);
+            }
+        }
     }
 }
 
