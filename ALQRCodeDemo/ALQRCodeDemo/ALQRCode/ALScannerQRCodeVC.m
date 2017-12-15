@@ -62,19 +62,25 @@
 #pragma mark - Private Method
 - (void)_setupViewController {
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
-    AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
-    [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-    output.rectOfInterest = CGRectMake(0, 0, 1, 1);
-    self.session = [[AVCaptureSession alloc] init];
-    [self.session setSessionPreset:AVCaptureSessionPresetHigh];
-    [self.session addInput:input];
-    [self.session addOutput:output];
-    output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code,  AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode128Code];
-    self.previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
-    self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    self.previewLayer.frame = self.view.layer.bounds;
-    [self.view.layer insertSublayer:self.previewLayer atIndex:0];
+    if (device) {
+        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
+        AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
+        [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        output.rectOfInterest = CGRectMake(0, 0, 1, 1);
+        self.session = [[AVCaptureSession alloc] init];
+        [self.session setSessionPreset:AVCaptureSessionPresetHigh];
+        if (input) {
+            [self.session addInput:input];
+        }
+        if (output) {
+            [self.session addOutput:output];
+            output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code,  AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode128Code];
+        }
+        self.previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
+        self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        self.previewLayer.frame = self.view.layer.bounds;
+        [self.view.layer insertSublayer:self.previewLayer atIndex:0];
+    }
 }
 
 - (void)_playSoundEffect:(NSString *)name {
