@@ -68,7 +68,6 @@
         AVCaptureMetadataOutput *output = [[AVCaptureMetadataOutput alloc] init];
         [output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
         output.rectOfInterest = CGRectMake(0, 0, 1, 1);
-        output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code,  AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode128Code];
         
         self.session = [[AVCaptureSession alloc] init];
         [self.session setSessionPreset:AVCaptureSessionPresetHigh];
@@ -78,6 +77,7 @@
         }
         if (output) {
             [self.session addOutput:output];
+            output.metadataObjectTypes = @[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code,  AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode128Code];
         }
         
         self.previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
