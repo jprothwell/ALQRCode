@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name         = "ALQRCodeEx"
-s.version      = "1.0.5"
+s.version      = "1.0.4"
 s.summary      = "一行代码就可以扫描二维码和生成二维码！PS:修改资源BUG"
 s.homepage     = "https://github.com/Smartios2012/ALQRCode"
 s.license      = { :type => "MIT", :file => "LICENSE" }
